@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- معلومات المعاينة عند الإرسال عبر واتساب (Open Graph) -->
+    <title>معايدة عيد الفطر المبارك</title>
+    <meta property="og:title" content="عيدكم مبارك وكل عام وأنتم بخير">
+    <meta property="og:description" content="بطاقة معايدة خاصة بمناسبة عيد الفطر المبارك - تقدمة صقر شاهين">
+    <!-- ضع رابط الصورة التي تريدها أن تظهر في واتساب هنا -->
+    <meta property="og:image" content="https://i.suar.me/OpBZM/m">
+    <meta property="og:type" content="website">
+
+    <!-- استيراد الخطوط -->
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #064e3b; 
+            --accent-color: #d4af37;  
+            --bg-color: #fffdf0;      
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--bg-color);
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #canvas-stars {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 0; pointer-events: none;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--primary-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            transition: opacity 0.8s ease;
+        }
+
+        .open-btn {
+            padding: 15px 40px;
+            font-size: 24px;
+            font-family: 'Amiri', serif;
+            background: var(--accent-color);
+            color: var(--primary-color);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            animation: pulse 2s infinite;
+        }
+
+        .card-container {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            max-width: 90%;
+            width: 450px;
+            padding: 40px 20px 20px;
+            background: white;
+            border-radius: 30px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+            border: 4px solid var(--accent-color);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1.2s ease;
+            display: none;
+        }
+
+        .card-container.show { display: block; opacity: 1; transform: translateY(0); }
+
+        .profile-img {
+            width: 160px; height: 160px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid var(--accent-color);
+            animation: float 4s ease-in-out infinite;
+            margin-bottom: 20px;
+        }
+
+        h1 { font-family: 'Amiri', serif; color: var(--primary-color); font-size: 2.2rem; margin-bottom: 10px; }
+        .person-name { font-size: 1.6rem; color: var(--accent-color); font-weight: bold; margin-bottom: 15px; }
+        
+        .signature {
+            margin-top: 25px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+            font-size: 0.9rem;
+            color: #777;
+            font-weight: bold;
+        }
+        .signature span { color: var(--accent-color); }
+
+        @keyframes pulse { 0% { transform: scale(1); } 70% { transform: scale(1.05); } 100% { transform: scale(1); } }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+    </style>
+</head>
+<body>
+
+    <div class="overlay" id="overlay">
+        <button class="open-btn" onclick="startGreeting()">افتح المعايدة ✉️</button>
+    </div>
+
+    <canvas id="canvas-stars"></canvas>
+
+    <div class="card-container" id="card">
+        <!-- استبدل الرابط هنا بصورة الشخص -->
+        <img src="https://i.suar.me/OpBZM/m" alt="صورة الشخص" class="profile-img">
+        
+        <h1>عيدكم مبارك <br> وكل عام وأنتم بخير</h1>
+        
+        <div class="person-name">آل شاهين الكرام</div>
+
+        <p>بمناسبة حلول عيد الفطر السعيد، أتقدم إليكم بأسمى آيات التهاني والتبريكات، سائلاً المولى أن يتقبل منا ومنكم صالح الأعمال.</p>
+        
+        <div style="color: var(--accent-color); margin-top: 15px;">✨ 🌙 ✨</div>
+
+        <div class="signature">
+            تقدمة <span> أبو صقر شاهين</span>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <script>
+        function startGreeting() {
+            // إخفاء الشاشة الافتتاحية وإظهار الكارت والقصاصات
+            document.getElementById('overlay').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('overlay').style.display = 'none';
+                const card = document.getElementById('card');
+                card.style.display = 'block';
+                setTimeout(() => card.classList.add('show'), 50);
+                launchConfetti();
+            }, 800);
+        }
+
+        function launchConfetti() {
+            var end = Date.now() + (4 * 1000);
+            (function frame() {
+                confetti({ particleCount: 3, angle: 60, spread: 55, origin: { x: 0 }, colors: ['#064e3b', '#d4af37'] });
+                confetti({ particleCount: 3, angle: 120, spread: 55, origin: { x: 1 }, colors: ['#064e3b', '#d4af37'] });
+                if (Date.now() < end) { requestAnimationFrame(frame); }
+            }());
+        }
+
+        // رسم النجوم في الخلفية
+        const canvas = document.getElementById('canvas-stars');
+        const ctx = canvas.getContext('2d');
+        let stars = [];
+        function init() {
+            canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+            stars = [];
+            for(let i=0; i<80; i++)
+                stars.push({x:Math.random()*canvas.width, y:Math.random()*canvas.height, size:Math.random()*2, op:Math.random(), s:0.02});
+        }
+        function draw() {
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+            stars.forEach(st => {
+                ctx.globalAlpha = st.op; ctx.fillStyle = "#d4af37";
+                ctx.beginPath(); ctx.arc(st.x, st.y, st.size, 0, Math.PI*2); ctx.fill();
+                st.op += st.s; if(st.op>1 || st.op<0) st.s = -st.s;
+            });
+            requestAnimationFrame(draw);
+        }
+        window.addEventListener('resize', init);
+        init(); draw();
+    </script>
+</body>
+</html>
