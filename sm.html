@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>معايدة عيد الفطر المبارك</title>
+    <!-- استيراد الخطوط -->
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -86,7 +87,6 @@
         h1 { font-family: 'Amiri', serif; color: var(--primary-color); font-size: 2.2rem; margin-bottom: 10px; }
         .person-name { font-size: 1.6rem; color: var(--accent-color); font-weight: bold; margin-bottom: 15px; }
         
-        /* تنسيق عبارة التقديم الجديدة */
         .signature {
             margin-top: 25px;
             padding-top: 15px;
@@ -103,9 +103,8 @@
 </head>
 <body>
 
-    <audio id="eidAudio" loop>
-        <source src="" type="audio/mpeg">
-    </audio>
+    <!-- تم ضبط preload="none" لعدم تحميل الصوت مع الصفحة -->
+    <audio id="eidAudio" preload="none" loop></audio>
 
     <div class="overlay" id="overlay">
         <button class="open-btn" onclick="startGreeting()">افتح المعايدة ✉️</button>
@@ -118,24 +117,32 @@
         
         <h1>عيدكم مبارك <br> وكل عام وأنتم بخير</h1>
         
-        <div class="person-name">خالي صبحي متو </div>
+        <div class="person-name">خالي صبحي متو</div>
 
         <p>بمناسبة حلول عيد الفطر السعيد، أتقدم إليكم بأسمى آيات التهاني والتبريكات.</p>
         
         <div style="color: var(--accent-color); margin-top: 15px;">✨ 🌙 ✨</div>
 
-        <!-- الجزء المطلوب -->
         <div class="signature">
-            تقدمة <span>المهندس صقر شاهين </span>
+            تقدمة <span>المهندس صقر شاهين</span>
         </div>
     </div>
 
+    <!-- تحميل سكربت القصاصات في النهاية -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <script>
         function startGreeting() {
             const audio = document.getElementById('eidAudio');
-            audio.play().catch(e => console.log("Audio blocked"));
+            
+            // تحميل الصوت فقط عند النقر (لزيادة سرعة الصفحة)
+            if (!audio.src) {
+                audio.src = "https://saqershahien.github.io/happy/ramadan.m4a"; 
+                audio.load();
+            }
+            
+            audio.play().catch(e => console.log("Audio delayed or blocked"));
 
+            // إخفاء الشاشة الافتتاحية
             document.getElementById('overlay').style.opacity = '0';
             setTimeout(() => {
                 document.getElementById('overlay').style.display = 'none';
@@ -155,14 +162,15 @@
             }());
         }
 
-        // رسم النجوم
+        // رسم النجوم (Background Animation)
         const canvas = document.getElementById('canvas-stars');
         const ctx = canvas.getContext('2d');
         let stars = [];
         function init() {
             canvas.width = window.innerWidth; canvas.height = window.innerHeight;
             stars = [];
-            for(let i=0; i<80; i++) stars.push({x:Math.random()*canvas.width, y:Math.random()*canvas.height, size:Math.random()*2, op:Math.random(), s:0.02});
+            for(let i=0; i<80; i++)
+                stars.push({x:Math.random()*canvas.width, y:Math.random()*canvas.height, size:Math.random()*2, op:Math.random(), s:0.02});
         }
         function draw() {
             ctx.clearRect(0,0,canvas.width,canvas.height);
