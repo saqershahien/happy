@@ -3,9 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- معلومات المعاينة عند الإرسال عبر واتساب (Open Graph) -->
     <title>معايدة عيد الفطر المبارك</title>
+    <meta property="og:title" content="عيدكم مبارك وكل عام وأنتم بخير">
+    <meta property="og:description" content="بطاقة معايدة خاصة بمناسبة عيد الفطر المبارك - تقدمة صقر شاهين">
+    <!-- ضع رابط الصورة التي تريدها أن تظهر في واتساب هنا -->
+    <meta property="og:image" content="https://i.suar.me/lZXLl/m">
+    <meta property="og:type" content="website">
+
     <!-- استيراد الخطوط -->
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    
     <style>
         :root {
             --primary-color: #064e3b; 
@@ -103,9 +112,6 @@
 </head>
 <body>
 
-    <!-- تم ضبط preload="none" لعدم تحميل الصوت مع الصفحة -->
-    <audio id="eidAudio" preload="none" loop></audio>
-
     <div class="overlay" id="overlay">
         <button class="open-btn" onclick="startGreeting()">افتح المعايدة ✉️</button>
     </div>
@@ -113,13 +119,14 @@
     <canvas id="canvas-stars"></canvas>
 
     <div class="card-container" id="card">
+        <!-- استبدل الرابط هنا بصورة الشخص -->
         <img src="https://i.suar.me/lZXLl/m" alt="صورة الشخص" class="profile-img">
         
         <h1>عيدكم مبارك <br> وكل عام وأنتم بخير</h1>
         
         <div class="person-name">خالي صبحي متو</div>
 
-        <p>بمناسبة حلول عيد الفطر السعيد، أتقدم إليكم بأسمى آيات التهاني والتبريكات.</p>
+        <p>بمناسبة حلول عيد الفطر السعيد، أتقدم إليكم بأسمى آيات التهاني والتبريكات، سائلاً المولى أن يتقبل منا ومنكم صالح الأعمال.</p>
         
         <div style="color: var(--accent-color); margin-top: 15px;">✨ 🌙 ✨</div>
 
@@ -128,21 +135,10 @@
         </div>
     </div>
 
-    <!-- تحميل سكربت القصاصات في النهاية -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <script>
         function startGreeting() {
-            const audio = document.getElementById('eidAudio');
-            
-            // تحميل الصوت فقط عند النقر (لزيادة سرعة الصفحة)
-            if (!audio.src) {
-                audio.src = "https://saqershahien.github.io/happy/ramadan.m4a"; 
-                audio.load();
-            }
-            
-            audio.play().catch(e => console.log("Audio delayed or blocked"));
-
-            // إخفاء الشاشة الافتتاحية
+            // إخفاء الشاشة الافتتاحية وإظهار الكارت والقصاصات
             document.getElementById('overlay').style.opacity = '0';
             setTimeout(() => {
                 document.getElementById('overlay').style.display = 'none';
@@ -162,7 +158,7 @@
             }());
         }
 
-        // رسم النجوم (Background Animation)
+        // رسم النجوم في الخلفية
         const canvas = document.getElementById('canvas-stars');
         const ctx = canvas.getContext('2d');
         let stars = [];
